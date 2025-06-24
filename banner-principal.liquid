@@ -1,0 +1,368 @@
+<section id="banner-principal{{ section.id }}" class="banner-principal">
+
+  {% for block in section.blocks %}
+    {% case block.type %}
+    
+      {% when 'imagen' %}
+      <a class="carruselBanners"
+        href="{{ block.settings.link }}"
+        title="{{ block.settings.alt | escape }}"
+        target="_blank">
+        <picture>
+          <source 
+            media="(max-width: 767px)" 
+            srcset="{{ block.settings.imagen_mobile | image_url }}"
+          >
+          <source 
+            media="(min-width: 768px)" 
+            srcset="{{ block.settings.imagen_desktop | image_url }}"
+          >
+          <img
+            decoding="async"
+            {% if block.settings.loading == "lazy" %}
+              loading="{{ block.settings.loading }}"
+            {% else %}
+              fetchpriority="high"
+            {% endif %}
+            alt="{{ block.settings.alt | escape }}"
+            width="1920"
+            height="auto"
+          >
+        </picture>
+      </a>
+
+
+      {% when 'bannerTexto' %}
+      <a class="carruselBanners bannerTexto"
+        href="{{ block.settings.link }}"
+        title="{{ block.settings.alt | escape }}"
+        target="_blank">
+        <picture>
+          <source 
+            media="(max-width: 767px)" 
+            srcset="{{ block.settings.imagen_mobile | image_url }}">
+          <source 
+            media="(min-width: 768px)" 
+            srcset="{{ block.settings.imagen_desktop | image_url }}">
+          <img
+            decoding="async"
+            {% if block.settings.loading == "lazy" %}
+              loading="{{ block.settings.loading }}"
+            {% endif %}
+            alt="{{ block.settings.alt | escape }}"
+            width="1920"
+            height="auto">
+        </picture>
+      
+        <div>
+          <h1>{{ block.settings.titulo }}</h1>
+        </div>
+      </a>
+
+
+      {% when 'bannerTextoBoton' %}
+      <article class="carruselBanners bannerTextoBoton">
+        <picture>
+          <source 
+            media="(max-width: 767px)" 
+            srcset="{{ block.settings.imagen_mobile | image_url }}">
+          <source 
+            media="(min-width: 768px)" 
+            srcset="{{ block.settings.imagen_desktop | image_url }}">
+          <img
+            decoding="async"
+            {% if block.settings.loading == "lazy" %}
+              loading="{{ block.settings.loading }}"
+            {% endif %}
+            alt="{{ block.settings.alt | escape }}"
+            width="1920"
+            height="auto">
+        </picture>
+      
+        <div>
+          <p>{{ block.settings.descripcion }}</p>
+          <br>
+          <br>
+          <a
+            class="btn mob-btn-sm btn-md btn1"
+            href="{{ block.settings.link }}"
+            title="{{ block.settings.titulo_boton }}"
+            target="_blank"
+          >
+            {{ block.settings.titulo_boton }}
+          </a>
+        </div>
+      </article>
+
+
+    {% endcase %}
+  {% endfor %}
+
+  <button class="izquierda" aria-label="Anterior">
+    <svg viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow"></path></svg>
+  </button>
+  <button class="derecha" aria-label="Siguiente">
+    <svg viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path></svg>
+  </button>
+
+</section>
+
+{% style %}
+    #banner-principal{{ section.id }} {
+      display: flex;
+      position: relative;
+      width: max-content;
+    }
+    #banner-principal{{ section.id }} .carruselBanners{
+      width: 100vw;
+      position: relative;
+    }
+    #banner-principal{{ section.id }} .carruselBanners.bannerTexto div{
+      position: absolute;
+      z-index:2;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      margin: auto;
+    }
+    #banner-principal{{ section.id }} .carruselBanners.bannerTextoBoton div{
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #banner-principal{{ section.id }} .carruselBanners.bannerTextoBoton p{
+      font-weight: 400;
+      line-height: normal;
+      color: white;
+      text-align: center;
+      text-shadow: 0px 0px 2px black;
+    }
+    #banner-principal{{ section.id }} h1 {
+      font-size: 48px;
+      height: 100%;
+      background: #0000008f;
+      margin: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: var(--blanco);
+    }
+    #banner-principal{{ section.id }} button{
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      z-index: 3;
+      transform: translate(0, -50%);
+      top: 50%;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: var(--naranja) solid 2px;
+    }
+    #banner-principal{{ section.id }} button.derecha{
+      left: calc(100vw - 60px);
+    }
+    #banner-principal{{ section.id }} button.izquierda{
+      left: 30px;
+    }
+  
+  @media (min-width:768px){
+    #banner-principal{{ section.id }} .carruselBanners.bannerTextoBoton div{width: 50%;}
+    #banner-principal{{ section.id }} .carruselBanners.bannerTexto div{width: 30%;}
+    #banner-principal{{ section.id }} h1 {font-size: 48px;}
+    #banner-principal{{ section.id }} .carruselBanners.bannerTextoBoton p{font-size: 36px;}
+    #banner-principal{{ section.id }} .mobile {display: none;}
+    #banner-principal{{ section.id }} .desktop {display: block;}
+  }
+  
+  @media (max-width:768px){
+    #banner-principal{{ section.id }} .carruselBanners.bannerTextoBoton div{width: 60%;}
+    #banner-principal{{ section.id }} .carruselBanners.bannerTexto div{width: 70%;}
+    #banner-principal{{ section.id }} h1 {font-size: 35px;}
+    #banner-principal{{ section.id }} .carruselBanners.bannerTextoBoton p{font-size: 22px;}
+    #banner-principal{{ section.id }} .mobile {display: block;}
+    #banner-principal{{ section.id }} .desktop {display: none;}
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Banner principal",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "imagen",
+      "name": "Solo Imagen",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "imagen_mobile",
+          "label": "Imagen Mobile"
+        },
+        {
+          "type": "image_picker",
+          "id": "imagen_desktop",
+          "label": "Imagen Desktop"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Texto Alt para ambas imágenes"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Url de banner"
+        },
+        {
+          "type": "select",
+          "id": "loading",
+          "label": "Seleccionar Loading para img",
+          "info": "No usar ayuda a mejorar el rendimiento de banner de inicio (se activará fetchpriority high), lazy para posteriores. ",
+          "options": [
+            {
+              "label": "No usar",
+              "value": "No usar",
+            },
+            {
+              "label": "lazy",
+              "value": "lazy",
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "bannerTexto",
+      "name": "Imagen con Título",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "imagen_mobile",
+          "label": "Imagen Mobile"
+        },
+        {
+          "type": "image_picker",
+          "id": "imagen_desktop",
+          "label": "Imagen Desktop"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Texto Alt para ambas imágenes"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Url de banner"
+        },
+        {
+          "type": "select",
+          "id": "loading",
+          "label": "Seleccionar Loading para img",
+          "info": "No usar ayuda a mejorar el rendimiento de banner de inicio (se activará fetchpriority high), lazy para posteriores. ",
+          "options": [
+            {
+              "label": "No usar",
+              "value": "No usar",
+            },
+            {
+              "label": "lazy",
+              "value": "lazy",
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "titulo",
+          "label": "Título (h1)"
+        }
+      ]
+    },
+    {
+      "type": "bannerTextoBoton",
+      "name": "Imagen con Texto y Botón",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "imagen_mobile",
+          "label": "Imagen Mobile"
+        },
+        {
+          "type": "image_picker",
+          "id": "imagen_desktop",
+          "label": "Imagen Desktop"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Texto Alt para ambas imágenes"
+        },
+        {
+          "type": "select",
+          "id": "loading",
+          "label": "Seleccionar Loading para img",
+          "info": "No usar ayuda a mejorar el rendimiento de banner de inicio (se activará fetchpriority high), lazy para posteriores. ",
+          "options": [
+            {
+              "label": "No usar",
+              "value": "No usar",
+            },
+            {
+              "label": "lazy",
+              "value": "lazy",
+            }
+          ]
+        },
+        {
+          "type": "textarea",
+          "id": "descripcion",
+          "label": "Texto descriptivo (p)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "URL del botón"
+        },
+        {
+          "type": "text",
+          "id": "titulo_boton",
+          "label": "Texto del botón (también se usa como title)",
+          "default": "Ver más"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner principal",
+      "category": "Imagen",
+      "blocks": [
+        {
+          "type": "imagen"
+        },
+        {
+          "type": "bannerTexto"
+        },
+        {
+          "type": "bannerTextoBoton"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
